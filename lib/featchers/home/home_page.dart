@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:news_application/settings.dart';
+import 'package:news_application/featchers/settings/settings.dart';
 
-import 'category_grid.dart';
-import 'category_item.dart';
-import 'details.dart';
-import 'drawer_widget.dart';
+import 'home_widgets/category_grid.dart';
+import 'home_widgets/details.dart';
+import 'home_widgets/drawer_widget.dart';
 
 class Homepage extends StatefulWidget {
   static const String routeName = "/";
