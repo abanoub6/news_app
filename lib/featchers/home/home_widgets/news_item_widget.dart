@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
+import '../../../data/api/news/article.dart';
+
 class NewsItemWidget extends StatelessWidget {
-  final String source;
-  const NewsItemWidget({super.key, required this.source});
+  final Article? article;
+  const NewsItemWidget({super.key, required this.article});
 
   @override
   Widget build(BuildContext context) {
@@ -12,17 +14,17 @@ class NewsItemWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.asset(
-            "assets/images/football.png",
+          Image.network(
+            article?.urlToImage ?? 'assets/images/news.png',
             width: double.infinity,
             height: MediaQuery.of(context).size.height * .3,
             fit: BoxFit.fill,
           ),
-          Text(source, style: theme.bodySmall!.copyWith(fontSize: 10)),
           Text(
-            "Why are football's biggest clubs starting a new tournament?",
-            style: theme.bodySmall,
+            article?.source.name ?? "",
+            style: theme.bodySmall!.copyWith(fontSize: 10),
           ),
+          Text(article?.content ?? "", style: theme.bodySmall),
         ],
       ),
     );

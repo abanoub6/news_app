@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:news_application/featchers/home/home_widgets/news_item_widget.dart';
-import 'package:news_application/featchers/home/home_widgets/tab_bar_item.dart';
+
+import 'package:news_application/featchers/home/home_widgets/tab_bar_widget.dart';
+
+import '../../../data/api/api_sevices.dart';
 
 class Details extends StatefulWidget {
-  final String id;
+  final String categoryId;
 
-  const Details({super.key, required this.id});
+  const Details({super.key, required this.categoryId});
 
   @override
   State<Details> createState() => _DetailsState();
@@ -13,43 +15,20 @@ class Details extends StatefulWidget {
 
 class _DetailsState extends State<Details> {
   int selectedTabIndex = 0;
-  List<String> sources = List.generate(10, (index) => "source ${index + 1}");
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        DefaultTabController(
-          length: sources.length,
-          child: TabBar(
-            indicator: BoxDecoration(color: Colors.transparent),
-            dividerColor: Colors.transparent,
-            onTap: (index) => setState(() => selectedTabIndex = index),
-            tabAlignment: TabAlignment.start,
-            // by default >> offSet
-            isScrollable: true,
-            // by default >> false
-            indicatorColor: Colors.green,
-            tabs:
-                sources
-                    .map(
-                      (source) => TabBarItem(
-                        source: source,
-                        isSelected: selectedTabIndex == sources.indexOf(source),
-                      ),
-                    )
-                    .toList(),
-          ),
-        ),
-        Expanded(
-          child: ListView.builder(
-            itemCount: 10,
-            itemBuilder:
-                (context, index) =>
-                    NewsItemWidget(source: sources[selectedTabIndex]),
-          ),
-        ),
-      ],
+    return FutureBuilder(
+      future: ApiServices.getSources(widget.categoryId),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError || snapshot.data!.status != "ok") {
+          return Text("something went wrong ");
+        } else {
+          return TabBarWidget(snapshot: snapshot);
+        }
+      },
     );
   }
 }

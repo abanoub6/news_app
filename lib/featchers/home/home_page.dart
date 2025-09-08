@@ -32,7 +32,7 @@ class _HomepageState extends State<Homepage> {
         ),
         body:
             selectedCategoryId != null
-                ? Details(id: selectedCategoryId!)
+                ? Details(categoryId: selectedCategoryId!)
                 : selectedItem == DrawerItem.categories
                 ? CategoryGrid(onCategoryClicked: onCategoryClicked)
                 : Settings(),
