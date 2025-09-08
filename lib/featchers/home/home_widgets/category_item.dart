@@ -14,37 +14,26 @@ class CategoryItem extends StatelessWidget {
   });
   static List<CategoryItem> categories = [
     CategoryItem(
-      id: "this is Business id",
+      id: "business",
       label: "Business",
       imageName: "bussines.png",
       color: const Color(0xFFC91C22),
     ),
+
     CategoryItem(
-      id: "this is Environment id",
-      label: "Environment",
-      imageName: "environment.png",
-      color: const Color(0xFF003E90),
-    ),
-    CategoryItem(
-      id: "this is Health id",
+      id: "health",
       label: "Health",
       imageName: "health.png",
       color: const Color(0xFFED1E79),
     ),
     CategoryItem(
-      id: "this is Politics id",
-      label: "Politics",
-      imageName: "politics.png",
-      color: const Color(0xFFCF7E48),
-    ),
-    CategoryItem(
-      id: "this is Science id",
+      id: "science",
       label: "Science",
       imageName: "science.png",
       color: const Color(0xFF4882CF),
     ),
     CategoryItem(
-      id: "this is Sports id",
+      id: "sports",
       label: "Sports",
       imageName: "sports.png",
       color: const Color(0xFFF2D352),
