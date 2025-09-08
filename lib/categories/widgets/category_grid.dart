@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'category_item.dart';
 
 class CategoryGrid extends StatelessWidget {
-  void Function(String id)? onCategoryClicked;
-  CategoryGrid({super.key, this.onCategoryClicked});
+  final void Function(String id)? onCategoryClicked;
+  const CategoryGrid({super.key, this.onCategoryClicked});
 
   @override
   Widget build(BuildContext context) {

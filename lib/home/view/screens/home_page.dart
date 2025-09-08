@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:news_application/featchers/settings/settings.dart';
 
-import 'home_widgets/category_grid.dart';
-import 'home_widgets/details.dart';
-import 'home_widgets/drawer_widget.dart';
+import '../../../categories/widgets/category_grid.dart';
+import '../../../news/view/screens/news_details.dart';
+import '../../../settings/screens/settings.dart';
+import '../widgets/drawer_widget.dart';
 
 class Homepage extends StatefulWidget {
+  const Homepage({super.key});
   static const String routeName = "/";
 
   @override
@@ -32,7 +33,7 @@ class _HomepageState extends State<Homepage> {
         ),
         body:
             selectedCategoryId != null
-                ? Details(id: selectedCategoryId!)
+                ? NewsDetails(categoryId: selectedCategoryId!)
                 : selectedItem == DrawerItem.categories
                 ? CategoryGrid(onCategoryClicked: onCategoryClicked)
                 : Settings(),

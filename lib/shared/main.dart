@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'app_theme.dart';
-import '../featchers/home/home_page.dart';
+import '../home/view/screens/home_page.dart';
 
 void main() {
   runApp(const MyApp());

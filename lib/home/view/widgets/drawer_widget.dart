@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class DrawerWidget extends StatelessWidget {
-  void Function(DrawerItem) onItemClicked;
-  DrawerWidget({super.key, required this.onItemClicked});
+  final void Function(DrawerItem) onItemClicked;
+  const DrawerWidget({super.key, required this.onItemClicked});
 
   @override
   Widget build(BuildContext context) {

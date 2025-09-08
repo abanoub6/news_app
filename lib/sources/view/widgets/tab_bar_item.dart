@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:news_application/core/app_theme.dart';
+import 'package:news_application/shared/app_theme.dart';
 
 class TabBarItem extends StatelessWidget {
   final String source;
