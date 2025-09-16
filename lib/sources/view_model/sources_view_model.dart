@@ -1,25 +1,21 @@
 import 'package:flutter/cupertino.dart';
 import 'package:news_application/sources/data/data_models/source_model.dart';
-import '../data/data_source/sources_data_source.dart';
+import 'package:news_application/sources/repository/sources_repository.dart';
+import '../data/data_source/sources_api_data_source.dart';
 
 class SourcesViewModel with ChangeNotifier {
-  List<SourceModel> sources = [];
+  SourcesRepository repository;
+  SourcesViewModel()
+    : repository = SourcesRepository(sourcesDataSource: SourcesApiDataSource());
+  late List<SourceModel> sources;
   String? errorMessage;
   bool isLoading = false;
   Future<void> getSources(String categoryId) async {
     isLoading = true;
     notifyListeners();
-    try {
-      final sourcesResponse = await SourcesDataSource().getSources(categoryId);
-      if (sourcesResponse.status == 'ok' &&
-          sourcesResponse.sources.isNotEmpty) {
-        sources = sourcesResponse.sources;
-      } else {
-        errorMessage = "Something went wrong";
-      }
-    } catch (error) {
-      errorMessage = error.toString();
-    }
+    await repository.getSources(categoryId);
+    sources = repository.sources;
+    errorMessage = repository.errorMessage;
     isLoading = false;
     notifyListeners();
   }

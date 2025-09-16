@@ -15,9 +15,9 @@ class _NewsWidgetState extends State<NewsWidget> {
   final viewModel = NewsViewModel();
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     viewModel.getNews(widget.sourceId);
+    print("news widget init state******************************");
   }
 
   @override
