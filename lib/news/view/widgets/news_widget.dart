@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_application/news/view_model/news_view_model.dart';
 import 'package:provider/provider.dart';
+import '../../view_model/news_states.dart';
 import 'news_item_widget.dart';
 
 class NewsWidget extends StatefulWidget {
@@ -17,29 +19,30 @@ class _NewsWidgetState extends State<NewsWidget> {
   void initState() {
     super.initState();
     viewModel.getNews(widget.sourceId);
-    print("news widget init state******************************");
   }
 
   @override
   Widget build(BuildContext context) {
     viewModel.getNews(widget.sourceId);
-    return ChangeNotifierProvider(
+    return BlocProvider(
       create: (context) => viewModel,
-      child: Consumer<NewsViewModel>(
-        builder: (_, viewModel, _) {
-          if (viewModel.isLoading) {
+      child: BlocBuilder<NewsViewModel, NewsStates>(
+        builder: (_, state) {
+          if (state is NewsLoadingState) {
             return Center(child: CircularProgressIndicator());
-          } else if (viewModel.errorMessage != null) {
-            return Center(child: Text(viewModel.errorMessage!));
-          } else {
+          } else if (state is NewsErrorState) {
+            return Center(child: Text(state.errorMessage));
+          } else if (state is NewsSuccessState) {
             return Expanded(
               child: ListView.builder(
-                itemCount: viewModel.news.length,
+                itemCount: state.news.length,
                 itemBuilder:
                     (context, index) =>
-                        NewsItemWidget(article: viewModel.news[index]),
+                        NewsItemWidget(article: state.news[index]),
               ),
             );
+          } else {
+            return SizedBox();
           }
         },
       ),

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../data/data_models/article.dart';
@@ -14,19 +15,20 @@ class NewsItemWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.network(
-            article?.urlToImage ?? '',
+          CachedNetworkImage(
+            imageUrl: article?.urlToImage ?? '',
             width: double.infinity,
             height: MediaQuery.of(context).size.height * .3,
             fit: BoxFit.fill,
-            errorBuilder: (context, _, _) {
-              return Image.asset(
-                'assets/images/notAvailable.png',
-                width: double.infinity,
-                height: MediaQuery.of(context).size.height * .3,
-                fit: BoxFit.fill,
-              );
-            },
+            placeholder:
+                (context, url) => Center(child: CircularProgressIndicator()),
+            errorWidget:
+                (context, url, error) => Image.asset(
+                  'assets/images/notAvailable.png',
+                  width: double.infinity,
+                  height: MediaQuery.of(context).size.height * .3,
+                  fit: BoxFit.fill,
+                ),
           ),
 
           Text(

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_application/sources/view/widgets/tab_bar_widget.dart';
+import 'package:news_application/sources/view_model/sources_states.dart';
 import 'package:news_application/sources/view_model/sources_view_model.dart';
-import 'package:provider/provider.dart';
 
 class NewsDetails extends StatefulWidget {
   final String categoryId;
@@ -24,22 +24,24 @@ class _NewsDetailsState extends State<NewsDetails> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
+    return BlocProvider(
       create: (context) => viewModel,
-      child: Consumer<SourcesViewModel>(
-        builder: (_, viewModel, _) {
-          if (viewModel.isLoading == true) {
+      child: BlocBuilder<SourcesViewModel, SourcesStates>(
+        builder: (_, state) {
+          if (state is SourcesLoadingState) {
             return Align(
               alignment: Alignment.topCenter,
               child: CircularProgressIndicator(),
             );
-          } else if (viewModel.errorMessage != null) {
+          } else if (state is SourcesErrorState) {
             return Text(
-              viewModel.errorMessage!,
+              state.errorMessage,
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 50),
             );
+          } else if (state is SourcesSuccessState) {
+            return TabBarWidget(sourcesList: state.sources);
           } else {
-            return TabBarWidget(sourcesList: viewModel.sources);
+            return SizedBox();
           }
         },
       ),

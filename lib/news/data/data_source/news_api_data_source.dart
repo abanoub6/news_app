@@ -16,6 +16,7 @@ class NewsApiDataSource extends NewsDataSource {
     final response = await http.get(rui);
     final json = jsonDecode(response.body);
     final newsResponse = NewsResponse.fromJson(json);
+
     if (newsResponse.status != "ok") {
       throw Exception("something went wrong");
     }
